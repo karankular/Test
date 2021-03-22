@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace VM
 {
-    class Program
+    public class Program
     {
         static double[] ValidCoins =  { 0.05, 0.10, 0.25 };
         static double totalAmount = 0;
@@ -18,14 +18,9 @@ namespace VM
             product.Add("E", 0.65);
 
             AddCoins();
-            GoToStore();
-
-
-
-
         }
 
-        private static void GoToStore()
+        public static void GoToStore()
         {
             Console.WriteLine("Welcome to store");
             Console.WriteLine("Press C for cola ($1.0)");
@@ -57,9 +52,9 @@ namespace VM
             }
         }
 
-        private static void AddCoins()
+        public static void AddCoins()
         {
-            double coin = getCoin();
+            double coin = GetCoin();
             totalAmount += coin;
             Console.WriteLine("Coin Added Successfully!. Total Amount : " + totalAmount + ".  Press A to Add more coin or any other key to go to store");
             string action = Console.ReadLine();
@@ -67,24 +62,20 @@ namespace VM
             {
                 AddCoins();
             }
+            else
+            {
+                GoToStore();
+            }
         }
-        private static double getCoin()
+        public static double GetCoin()
         {
             Console.WriteLine("Please enter coin : ");
             var coin = Console.ReadLine();
             double f;
-            if (!double.TryParse(coin, out f))
+            if (!double.TryParse(coin, out f) || !ValidCoins.Contains(f))
             {
                 Console.WriteLine("Please enter valid coin.");
-                f = getCoin();
-            }
-            else
-            {
-                if (!ValidCoins.Contains(f))
-                {
-                    Console.WriteLine("Please enter valid coin.");
-                    f = getCoin();
-                }
+                f = GetCoin();
             }
             return f;
         }
